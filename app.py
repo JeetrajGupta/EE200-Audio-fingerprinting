@@ -16,14 +16,47 @@ st.markdown("""
     .stApp { background-color: #0E1117; color: #FFFFFF; }
     .main-title { font-size: 52px; font-weight: 900; color: #FFFFFF; margin-bottom: 0px; letter-spacing: -1px; line-height: 1.1; }
     .subtitle { font-size: 18px; color: #00E5FF; font-family: monospace; letter-spacing: 3px; margin-bottom: 35px; font-weight: 700; }
+    
     .stTabs [data-baseweb="tab-list"] { gap: 24px; }
     .stTabs [data-baseweb="tab"] { font-size: 20px !important; font-weight: 700 !important; color: #888 !important; padding: 12px 24px !important; }
     .stTabs [aria-selected="true"] { color: #00E5FF !important; border-bottom-color: #00E5FF !important; }
+    
     .metric-box { border: 2px solid #1E293B; padding: 20px; border-radius: 12px; text-align: center; background-color: #1E2530; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
     .metric-val { font-size: 32px; font-weight: 800; color: #00E5FF; font-family: monospace; }
     .metric-lbl { font-size: 13px; color: #94A3B8; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; margin-top: 4px; }
+    
     .prediction-header { font-size: 40px !important; font-weight: 900 !important; color: #00E5FF !important; text-transform: uppercase; letter-spacing: 1px; line-height: 1.2; margin-top: 10px; }
     .stAlert { background-color: #064E3B !important; border: 1px solid #059669 !important; color: #FFF !important; padding: 24px !important; border-radius: 12px !important; }
+    
+    div.stButton > button:first-child, div.stDownloadButton > button:first-child {
+        width: 100% !important;
+    }
+    
+    div.stButton > button:first-child {
+        background-color: #00E5FF !important;
+        color: #0E1117 !important;
+        font-weight: 800 !important;
+        font-size: 16px !important;
+        border: none !important;
+        border-radius: 8px !important;
+    }
+    div.stButton > button:first-child:hover {
+        background-color: #00B2CC !important;
+        color: #0E1117 !important;
+    }
+    
+    div.stDownloadButton > button:first-child {
+        background-color: #1E293B !important;
+        color: #00E5FF !important;
+        font-weight: 800 !important;
+        font-size: 16px !important;
+        border: 2px solid #00E5FF !important;
+        border-radius: 8px !important;
+    }
+    div.stDownloadButton > button:first-child:hover {
+        background-color: #00E5FF !important;
+        color: #0E1117 !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -69,22 +102,7 @@ if 'database' not in st.session_state:
             ("Let It Be", 42639), ("Lucy In The Sky With Diamonds", 38704), 
             ("Penny Lane", 37764), ("We Can Work It Out", 26759),
             ("Never Gonna Give You Up", 47875), ("While My Guitar Gently Weeps", 58647),
-            ("We Will Rock You", 22855), ("Hey Jude", 84075),
-            ("I Am The Walrus", 57446), ("I've Got A Feeling", 40788),
-            ("Norwegian Wood", 25950), ("Revolution", 47523),
-            ("Sgt. Pepper's Lonely Hearts...", 25021), ("She Said She Said", 34248),
-            ("Something", 29371), ("With A Little Help From My...", 38244),
-            ("Across The Universe", 46268), ("Day Tripper", 37030),
-            ("Eight Days A Week", 31850), ("Hello, Goodbye", 42784),
-            ("Help!", 29492), ("Helter Skelter", 53370),
-            ("I Want To Hold Your Hand", 30342), ("I'll Follow The Sun", 20297),
-            ("Yesterday", 20913), ("Get Back", 36718),
-            ("I Saw Her Standing There", 38398), ("In My Life", 27595),
-            ("Love Me Do", 27827), ("Bohemian Rhapsody", 41702),
-            ("Somebody To Love", 53865), ("Crazy Little Thing Called Love", 32537),
-            ("Don't Stop Me Now", 47302), ("I Want It All", 48848),
-            ("Killer Queen", 37745), ("Radio Ga Ga", 66647),
-            ("Under Pressure", 45395), ("We Are The Champions", 48648)
+            ("We Will Rock You", 22855), ("Hey Jude", 84075)
         ]
         for name, h_count in mock_songs:
             st.session_state.song_metadata[name] = h_count
@@ -116,7 +134,7 @@ with tab_identify:
     if uploaded_file is not None:
         st.audio(uploaded_file)
         
-        if st.button("EXECUTE CORE IDENTIFICATION", type="primary", width="stretch"):
+        if st.button("EXECUTE CORE IDENTIFICATION", type="primary"):
             with st.spinner("Decoding audio streams and resolving architectural time offsets..."):
                 
                 import time
@@ -189,7 +207,7 @@ with tab_identify:
                 if peaks:
                     t_p, f_p = zip(*peaks)
                     ax[1].scatter(t_p, f_p, color='#00E5FF', s=2.5, alpha=0.9)
-                ax[1].set_title(f"Constellation Spatial Peak Mapping", fontsize=14, fontweight='bold', color='#00E5FF')
+                ax[1].set_title(r"Constellation Spatial Peak Mapping", fontsize=14, fontweight='bold', color='#00E5FF')
                 ax[1].set_xlabel("Time Index (Frames)")
                 ax[1].set_ylabel("Frequency Bin Index")
                 ax[1].patch.set_facecolor('#111622')
@@ -216,7 +234,7 @@ with tab_batch:
     st.markdown("<h2 style='font-size:28px; font-weight:700;'>Batch Parallel Verification Pipeline</h2>", unsafe_allow_html=True)
     batch_files = st.file_uploader("Upload continuous batch collections simultaneously", type=['mp3', 'wav'], accept_multiple_files=True)
     
-    if batch_files and st.button("RUN PARALLEL STREAM VERIFICATION", width="stretch"):
+    if batch_files and st.button("RUN PARALLEL STREAM VERIFICATION"):
         results_list = []
         progress_bar = st.progress(0.0)
         
@@ -249,13 +267,12 @@ with tab_batch:
             
         df_results = pd.DataFrame(results_list)
         st.markdown("<br>", unsafe_allow_html=True)
-        st.dataframe(df_results, width="stretch")
+        st.dataframe(df_results)
         
         csv_data = df_results.to_csv(index=False).encode('utf-8')
         st.download_button(
-        label="📥 DOWNLOAD BATCH RESULTS AS CSV",
-        data=csv_data,
-        file_name="results.csv",
-        mime="text/csv",
-        width="stretch"
-    )
+            label="📥 DOWNLOAD BATCH RESULTS AS CSV",
+            data=csv_data,
+            file_name="results.csv",
+            mime="text/csv"
+        )
