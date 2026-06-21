@@ -116,7 +116,7 @@ with tab_identify:
     if uploaded_file is not None:
         st.audio(uploaded_file)
         
-        if st.button("EXECUTE CORE IDENTIFICATION", type="primary", use_container_width=True):
+        if st.button("EXECUTE CORE IDENTIFICATION", type="primary", width="stretch"):
             with st.spinner("Decoding audio streams and resolving architectural time offsets..."):
                 
                 import time
@@ -216,7 +216,7 @@ with tab_batch:
     st.markdown("<h2 style='font-size:28px; font-weight:700;'>Batch Parallel Verification Pipeline</h2>", unsafe_allow_html=True)
     batch_files = st.file_uploader("Upload continuous batch collections simultaneously", type=['mp3', 'wav'], accept_multiple_files=True)
     
-    if batch_files and st.button("RUN PARALLEL STREAM VERIFICATION", use_container_width=True):
+    if batch_files and st.button("RUN PARALLEL STREAM VERIFICATION", width="stretch"):
         results_list = []
         progress_bar = st.progress(0.0)
         
@@ -249,13 +249,13 @@ with tab_batch:
             
         df_results = pd.DataFrame(results_list)
         st.markdown("<br>", unsafe_allow_html=True)
-        st.dataframe(df_results, use_container_width=True)
+        st.dataframe(df_results, width="stretch")
         
         csv_data = df_results.to_csv(index=False).encode('utf-8')
         st.download_button(
-            label="📥 DOWNLOAD BATCH RESULTS AS CSV",
-            data=csv_data,
-            file_name="results.csv",
-            mime="text/csv",
-            use_container_width=True
-        )
+        label="📥 DOWNLOAD BATCH RESULTS AS CSV",
+        data=csv_data,
+        file_name="results.csv",
+        mime="text/csv",
+        width="stretch"
+    )
