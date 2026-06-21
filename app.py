@@ -207,7 +207,7 @@ with tab_identify:
                     ax_hist.axvline(x=peak_bin_center, color='#00E5FF', linestyle='--', linewidth=2, label=f"Alignment Spikes ({max_hits} hits)")
                 
                 ax_hist.set_title("Time-Offset Matrix Array Signature Spike", fontsize=14, fontweight='bold', color='#00E5FF')
-                ax_hist.set_xlabel("Structural Frame Spatial Displacements ($\Delta t = t_{song} - t_{query}$)", fontsize=12)
+                ax_hist.set_xlabel(r"Structural Frame Spatial Displacements ($\Delta t = t_{song} - t_{query}$)", fontsize=12)
                 ax_hist.set_ylabel("Matched Token Cluster Count", fontsize=12)
                 ax_hist.grid(True, linestyle=":", alpha=0.3)
                 st.pyplot(fig_hist)
